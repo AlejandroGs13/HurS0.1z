@@ -12,19 +12,27 @@ import com.example.alejandrogs.hurs01z.R;
  * Created by alejandrogs on 11/04/17.
  */
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>
+                                implements View.OnClickListener {
 
+    private View.OnClickListener listener;
     private String[] Data;
+
+
 
     public RecyclerAdapter(String[] Data){
         this.Data = Data;
     }
 
+    public void setOnClickListener(View.OnClickListener listener) {
+        this.listener = listener;
+    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item,parent,false);
 
+        view.setOnClickListener(this);
         ViewHolder viewHolder = new ViewHolder(view);
 
         return viewHolder;
@@ -40,6 +48,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public int getItemCount() {
         return Data.length;
+    }
+
+
+
+    @Override
+    public void onClick(View view) {
+        if(listener != null)
+            listener.onClick(view);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
