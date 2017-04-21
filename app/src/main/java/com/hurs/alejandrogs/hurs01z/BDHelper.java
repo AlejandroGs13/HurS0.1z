@@ -129,5 +129,32 @@ public class BDHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void  updateIDs(String ID, View v,String nID) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        try{
+            //db.insert(TABLE_NOTAS, null, values);
+            String query = ("UPDATE "+TABLE_NOTAS+ " SET "+NOTE_ID+" = '"+nID+"' WHERE "+NOTE_ID+" = '"+ID+"';" );
+            db.execSQL(query);
+        }catch (SQLException ex){
+
+            Toast.makeText(v.getContext(),"Error en actualizar la nota",Toast.LENGTH_SHORT).show();
+
+        }
+        db.close();
+    }
+
+    public void  DeleteNote(String ID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        try{
+            String query = ("DELETE FROM "+TABLE_NOTAS+ " WHERE "+NOTE_ID+" = '"+ID+"';" );
+            db.execSQL(query);
+        }catch (SQLException ex){
+
+
+
+        }
+        db.close();
+    }
 }

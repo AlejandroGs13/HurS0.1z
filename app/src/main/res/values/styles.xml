@@ -26,7 +26,7 @@
     <style name="MyTheme" parent="AppTheme" />
 
     <style name="MyButton" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">@color/colorPrimary</item>
+        <item name="colorControlHighlight">#FBC02D</item>
         <item name="colorButtonNormal">@color/colorPrimaryDark</item>
         <item name="android:textColor">#ffffff</item>
     </style>
