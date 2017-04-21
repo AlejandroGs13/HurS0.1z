@@ -1,12 +1,10 @@
 package com.example.alejandrogs.hurs01z;
 
-import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -26,10 +24,9 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
         TabLayout tabs;
         BDHelper db;
-
-
         private FloatingActionButton fab;
         private int fabInt = 0;
+        android.app.FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +35,6 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         db= new BDHelper(this);
-
         /*
             Tabs
          */
@@ -53,6 +49,7 @@ public class MainActivity extends AppCompatActivity
         /*
         Igualamos el floatingbutton y creramos su onclicklistener
          */
+
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setImageResource(R.drawable.ic_add_black_24dp);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -60,11 +57,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 switch (fabInt) {
                     case 0:
-
-                        android.app.FragmentManager fragmentManager;
-                        db.addNota("Segundo","Este es el maldito contenido",view);
-                        fragmentManager = getFragmentManager();
-                        fragmentManager.beginTransaction().replace(R.id.context_frame, new MainFragment()).commit();
+                        notes(view);
                         break;
                     case 1:
                         snackbarMessage(view, "Esto es una prueba 1");
@@ -77,6 +70,9 @@ public class MainActivity extends AppCompatActivity
                         break;
                     case 4:
                         snackbarMessage(view, "Esto es una prueba 4");
+                        break;
+                    case 7:
+
                         break;
                 }
             }
@@ -99,15 +95,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -136,7 +124,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        android.app.FragmentManager fragmentManager;
+      //  android.app.FragmentManager fragmentManager;
         if (id == R.id.nav_note) {
             fabInt = 0;
             fab.setImageResource(R.drawable.ic_add_black_24dp);
@@ -160,9 +148,9 @@ public class MainActivity extends AppCompatActivity
             fab.setImageResource(R.drawable.ic_location_on_black_24dp);
 
         } else if (id == R.id.nav_share) {
-
+            fabInt = 5;
         } else if (id == R.id.nav_cloud) {
-
+            fabInt = 6;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -175,4 +163,17 @@ public class MainActivity extends AppCompatActivity
                 .setAction("Action", null).show();
 
     }
+
+    public void notes(View view){
+        Intent intent = new Intent(getApplicationContext(),NoteActivity.class);
+        startActivityForResult(intent,0);
+        finish();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
 }

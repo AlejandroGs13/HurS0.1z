@@ -1,5 +1,6 @@
 package com.hurs.alejandrogs.hurs01z;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -18,7 +19,7 @@ import java.util.List;
  * Created by alejandrogs on 20/04/17.
  */
 
-public class BDHelper extends SQLiteOpenHelper{
+public class BDHelper extends SQLiteOpenHelper {
 
     // Version de la base de datos
     private static final int DATABASE_VERSION = 1;
@@ -97,4 +98,6 @@ public class BDHelper extends SQLiteOpenHelper{
 
         return NoteList;
     }
+
+
 }
