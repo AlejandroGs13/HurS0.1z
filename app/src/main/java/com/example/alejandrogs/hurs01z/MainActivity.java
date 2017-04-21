@@ -165,8 +165,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void notes(View view){
-        Intent intent = new Intent(getApplicationContext(),NoteActivity.class);
-        startActivityForResult(intent,0);
+        Intent Nota =new Intent(view.getContext().getApplicationContext(),NoteActivity.class);
+        Nota.putExtra("Nota","");
+        Nota.putExtra("ID","");
+        Nota.putExtra("Edit","0");
+        startActivity(Nota);
         finish();
 
     }

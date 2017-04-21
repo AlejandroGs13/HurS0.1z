@@ -79,7 +79,7 @@ public class BDHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public ArrayList getAllCountries() {
+    public ArrayList getAllNotes() {
         ArrayList NoteList = new ArrayList();
 
         String selectQuery = "SELECT  * FROM " + TABLE_NOTAS;
@@ -97,6 +97,36 @@ public class BDHelper extends SQLiteOpenHelper {
 
 
         return NoteList;
+    }
+
+    // getNote
+    String getNote(String id) {
+        String selectQuery = "SELECT "+NOTE_Text+" FROM " + TABLE_NOTAS +" WHERE "+NOTE_ID+" = '"+id+"';";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        String note="";
+        if (cursor.moveToFirst()) {
+            do {
+
+                note = cursor.getString(0);
+            } while (cursor.moveToNext());
+        }
+        return note;
+    }
+
+    public void  updateNOte(String ID, String Text,View v) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        try{
+            //db.insert(TABLE_NOTAS, null, values);
+            String query = ("UPDATE "+TABLE_NOTAS+ " SET "+NOTE_Text+" = '"+Text+"' WHERE "+NOTE_ID+" = '"+ID+"';" );
+            db.execSQL(query);
+        }catch (SQLException ex){
+
+            Toast.makeText(v.getContext(),"Error en actualizar la nota",Toast.LENGTH_SHORT).show();
+
+        }
+        db.close();
     }
 
 

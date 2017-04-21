@@ -15,6 +15,7 @@ public class NoteActivity extends AppCompatActivity {
 
     private FloatingActionButton fab;
     private EditText note,titulo;
+    private String edt;
     BDHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,17 +26,43 @@ public class NoteActivity extends AppCompatActivity {
         note = (EditText)findViewById(R.id.edit_nota);
         titulo = (EditText)findViewById(R.id.edit_titulo);
         db= new BDHelper(this);
+
+        Bundle bundle = getIntent().getExtras();
+        edt = bundle.getString("Edit");
+
+        if (edt.equals("1")) {
+            String ID = bundle.getString("ID");
+            String Nota = bundle.getString("Nota");
+            note.setText(Nota);
+            titulo.setText(ID);
+            titulo.setKeyListener(null);
+        }
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!String.valueOf(titulo.getText()).equals("")){
-                    if (!String.valueOf(note.getText()).equals("")){
-                            db.addNota(String.valueOf(titulo.getText()),String.valueOf(note.getText()),v);
-                    }else {
-                        snackbarMessage(v,"No a escrito nada");
+                if (edt.equals("0")) {
+                    if (!String.valueOf(titulo.getText()).equals("")) {
+                        if (!String.valueOf(note.getText()).equals("")) {
+                            db.addNota(String.valueOf(titulo.getText()), String.valueOf(note.getText()), v);
+                            snackbarMessage(v,"Nota Guardada");
+                            edt ="1";
+                        } else {
+                            snackbarMessage(v, "No a escrito nada");
+                        }
+                    } else {
+                        snackbarMessage(v, "No tiene titulo");
                     }
-                }else{
-                    snackbarMessage(v,"No tiene titulo");
+                }else {
+                    if (!String.valueOf(titulo.getText()).equals("")) {
+                        if (!String.valueOf(note.getText()).equals("")) {
+                            db.updateNOte(String.valueOf(titulo.getText()),String.valueOf(note.getText()),v);
+                            snackbarMessage(v,"Nota actualizada");
+                        } else {
+                            snackbarMessage(v, "No a escrito nada");
+                        }
+                    } else {
+                        snackbarMessage(v, "No tiene titulo");
+                    }
                 }
             }
         });
