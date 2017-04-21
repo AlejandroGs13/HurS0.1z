@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.example.alejandrogs.hurs01z.R;
 
+import java.util.ArrayList;
+
 /**
  * Created by alejandrogs on 11/04/17.
  */
@@ -17,11 +19,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     private View.OnClickListener listener;
     private String[] Data;
+    private ArrayList IDs;
 
 
 
-    public RecyclerAdapter(String[] Data){
-        this.Data = Data;
+    public RecyclerAdapter(ArrayList IDs){
+        this.IDs = IDs;
     }
 
     public void setOnClickListener(View.OnClickListener listener) {
@@ -41,13 +44,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.textView.setText(Data[position]);
+        holder.textView.setText(String.valueOf(IDs.get(position)));
 
     }
 
     @Override
     public int getItemCount() {
-        return Data.length;
+        return IDs.size();
     }
 
 

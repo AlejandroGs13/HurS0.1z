@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.hurs.alejandrogs.hurs01z.BDHelper;
 import com.hurs.alejandrogs.hurs01z.LocationFragment;
 import com.hurs.alejandrogs.hurs01z.MainFragment;
 import com.hurs.alejandrogs.hurs01z.PhotoFragment;
@@ -23,6 +25,9 @@ import com.hurs.alejandrogs.hurs01z.PhotoFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
         TabLayout tabs;
+        BDHelper db;
+
+
         private FloatingActionButton fab;
         private int fabInt = 0;
     @Override
@@ -31,6 +36,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        db= new BDHelper(this);
 
         /*
             Tabs
@@ -46,14 +53,18 @@ public class MainActivity extends AppCompatActivity
         /*
         Igualamos el floatingbutton y creramos su onclicklistener
          */
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setImageResource(R.drawable.ic_add_black_24dp);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switch (fabInt) {
                     case 0:
-                        snackbarMessage(view, "Esto es una prueba 0");
+
+                        android.app.FragmentManager fragmentManager;
+                        db.addNota("Segundo","Este es el maldito contenido",view);
+                        fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.context_frame, new MainFragment()).commit();
                         break;
                     case 1:
                         snackbarMessage(view, "Esto es una prueba 1");
