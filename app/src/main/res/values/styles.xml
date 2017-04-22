@@ -30,4 +30,12 @@
         <item name="colorButtonNormal">@color/colorPrimaryDark</item>
         <item name="android:textColor">#ffffff</item>
     </style>
+
+    <style name="MyButtonwidget" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlHighlight">#009688</item>
+        <item name="colorButtonNormal">#2196F3</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+
 </resources>

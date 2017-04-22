@@ -19,7 +19,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NoteActivity"></activity>
+        <activity android:name=".NoteActivity" />
+
+        <receiver android:name=".HuSAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/hu_sapp_widget_info" />
+        </receiver>
     </application>
 
 </manifest>
