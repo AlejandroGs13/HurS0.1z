@@ -16,7 +16,7 @@
         style="@style/MyButtonwidget"
         />
     <Button
-        android:layout_marginLeft="10dp"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#09C"
@@ -27,7 +27,7 @@
         android:id="@+id/bt_audio"
         />
     <Button
-        android:layout_marginLeft="10dp"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#09C"
@@ -38,7 +38,7 @@
         android:id="@+id/bt_camera"
         />
     <Button
-        android:layout_marginLeft="10dp"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/MyButtonwidget"

@@ -33,7 +33,7 @@ public class BDHelper extends SQLiteOpenHelper {
     // Nombre de las columnas de la tabla Notes
     private static final String NOTE_ID = "Id_note";
     private static final String NOTE_Text = "Text";
-
+    private static final String NOTE_CIFRA = "Cifrado";
 
     public BDHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -44,7 +44,7 @@ public class BDHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_NOTES_TABLE = "CREATE TABLE " + TABLE_NOTAS + "("
-                + NOTE_ID + " TEXT PRIMARY KEY," + NOTE_Text + " TEXT"+ ")";
+                + NOTE_ID + " TEXT PRIMARY KEY," + NOTE_Text + " TEXT"+","+ NOTE_CIFRA +" TEXT)";
         db.execSQL(CREATE_NOTES_TABLE);
     }
     //ACtualizacion de l abase de datos
@@ -68,13 +68,13 @@ public class BDHelper extends SQLiteOpenHelper {
         // Insertar
         try{
         //db.insert(TABLE_NOTAS, null, values);
-        String query = ("INSERT INTO "+TABLE_NOTAS+" ("+NOTE_ID+","+NOTE_Text+") VALUES('"+ID+"','"+Text+"');");
+        String query = ("INSERT INTO "+TABLE_NOTAS+" ("+NOTE_ID+","+NOTE_Text+","+NOTE_CIFRA+") VALUES('"+ID+"','"+Text+"','0');");
         db.execSQL(query);
         }catch (SQLException ex){
 
-                Snackbar.make(v, "Error al insertar Titulo ya utilizado", Snackbar.LENGTH_LONG)
-                      .setAction("Action", null).show();
-
+                //Snackbar.make(v, "Error al insertar Titulo ya utilizado", Snackbar.LENGTH_LONG)
+                  //    .setAction("Action", null).show();
+            System.out.println(ex);
         }
         db.close();
     }
@@ -95,12 +95,12 @@ public class BDHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
-
+        db.close();
         return NoteList;
     }
 
     // getNote
-    String getNote(String id) {
+    public String getNote(String id) {
         String selectQuery = "SELECT "+NOTE_Text+" FROM " + TABLE_NOTAS +" WHERE "+NOTE_ID+" = '"+id+"';";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -111,6 +111,32 @@ public class BDHelper extends SQLiteOpenHelper {
                 note = cursor.getString(0);
             } while (cursor.moveToNext());
         }
+        db.close();
+
+        return note;
+    }
+
+    public    String getCIfrado(String id) {
+        String note="";
+        String selectQuery = "SELECT "+NOTE_CIFRA+" FROM " + TABLE_NOTAS +" WHERE "+NOTE_ID+" = '"+id+"';";
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        try {
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+
+                    note = cursor.getString(0);
+                } while (cursor.moveToNext());
+            }
+
+        }catch (SQLException ex){
+            System.out.println(""+ex);
+        }
+
+        db.close();
+
         return note;
     }
 
@@ -124,12 +150,12 @@ public class BDHelper extends SQLiteOpenHelper {
         }catch (SQLException ex){
 
             Toast.makeText(v.getContext(),"Error en actualizar la nota",Toast.LENGTH_SHORT).show();
-
+            System.out.println(ex);
         }
         db.close();
     }
 
-    public void  updateIDs(String ID, View v,String nID) {
+    public void  updateIDs(String ID,String nID) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         try{
@@ -138,8 +164,21 @@ public class BDHelper extends SQLiteOpenHelper {
             db.execSQL(query);
         }catch (SQLException ex){
 
-            Toast.makeText(v.getContext(),"Error en actualizar la nota",Toast.LENGTH_SHORT).show();
+            System.out.println("Error"+ex);
 
+        }
+        db.close();
+    }
+
+    public void  updateCifrar(String ID, String cifrado) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        try{
+            //db.insert(TABLE_NOTAS, null, values);
+            String query = ("UPDATE "+TABLE_NOTAS+ " SET "+NOTE_CIFRA+" = '"+cifrado+"' WHERE "+NOTE_ID+" = '"+ID+"';" );
+            db.execSQL(query);
+        }catch (SQLException ex){
+            System.out.println("Error"+ex);
         }
         db.close();
     }

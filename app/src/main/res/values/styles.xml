@@ -23,13 +23,15 @@
         <item name="android:background">?android:attr/listDivider</item>
     </style>
 
-    <style name="MyTheme" parent="AppTheme" />
 
     <style name="MyButton" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">#FBC02D</item>
         <item name="colorButtonNormal">@color/colorPrimaryDark</item>
         <item name="android:textColor">#ffffff</item>
     </style>
+    <style name="MyTheme" parent="AppTheme" />
+
+
 
     <style name="MyButtonwidget" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlHighlight">#009688</item>

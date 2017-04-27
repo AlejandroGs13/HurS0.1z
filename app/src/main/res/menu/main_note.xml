@@ -6,4 +6,10 @@
         android:orderInCategory="100"
         android:title="Eliminar"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_cifrar_note"
+        android:orderInCategory="100"
+        android:title="cifrar"
+        app:showAsAction="never" />
 </menu>
