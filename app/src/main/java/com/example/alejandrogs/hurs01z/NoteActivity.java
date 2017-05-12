@@ -82,7 +82,7 @@ public  class NoteActivity extends AppCompatActivity {
                     } else {
                         snackbarMessage("No tiene titulo");
                     }
-                }else if (db.getCIfrado(ID).equals("0")){
+                }else if (db.getCIfrado(String.valueOf(titulo.getText())).equals("0")){
                     fab.setImageResource(R.drawable.ic_save_black_24dp);
                     if (!String.valueOf(titulo.getText()).equals("")) {
                         if (!String.valueOf(note.getText()).equals("")) {
@@ -100,7 +100,7 @@ public  class NoteActivity extends AppCompatActivity {
                     } else {
                         snackbarMessage("No tiene titulo");
                     }
-                }else{
+                }else if ((db.getCIfrado(ID).equals("1"))){
                     fab.setImageResource(R.drawable.ic_vpn_key_white_24dp);
                     password(1,v);
                     try {

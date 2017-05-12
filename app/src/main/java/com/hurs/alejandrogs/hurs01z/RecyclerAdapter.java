@@ -20,7 +20,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private View.OnClickListener listener;
     private String[] Data;
     private ArrayList IDs;
-
+    private int position1=0;
 
 
     public RecyclerAdapter(ArrayList IDs){
@@ -43,7 +43,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        position1 = position;
         holder.textView.setText(String.valueOf(IDs.get(position)));
 
     }
@@ -61,12 +61,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             listener.onClick(view);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public  class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView textView;
         public ViewHolder(View itemView){
             super(itemView);
             textView = (TextView)itemView.findViewById(R.id.item);
+
         }
     }
 }
