@@ -1,7 +1,11 @@
 package com.example.alejandrogs.hurs01z;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -14,22 +18,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.hurs.alejandrogs.hurs01z.BDHelper;
 import com.hurs.alejandrogs.hurs01z.LocationFragment;
 import com.hurs.alejandrogs.hurs01z.MainFragment;
 import com.hurs.alejandrogs.hurs01z.PhotoFragment;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
         TabLayout tabs;
         BDHelper db;
+        static final int REQUEST_IMAGE_CAPTURE = 1;
+        private String name = "";
         private FloatingActionButton fab;
         private int fabInt = 0;
         android.app.FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        name = Environment.getExternalStorageDirectory() + "/test.jpg";
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,7 +70,8 @@ public class MainActivity extends AppCompatActivity
                         notes(view);
                         break;
                     case 1:
-                        snackbarMessage(view, "Esto es una prueba 1");
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent,0);
                         break;
                     case 2:
                         snackbarMessage(view, "Esto es una prueba 2");
@@ -178,5 +189,15 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         finish();
     }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+
+
 
 }
