@@ -29,12 +29,18 @@ public class BDHelper extends SQLiteOpenHelper {
 
     // Nombre de las tablas
     private static final String TABLE_NOTAS= "Notes";
+    private static final String TABLE_PHOTO= "Photos";
 
     // Nombre de las columnas de la tabla Notes
     private static final String NOTE_ID = "Id_note";
     private static final String NOTE_Text = "Text";
     private static final String NOTE_CIFRA = "Cifrado";
 
+    /////
+    private static final String PHOTO_ID = "Id_photo";
+    private static final String PHOTO_RUTA = "ruta_photo";
+    private static final String PHOTO_CIFRADO = "cifrado_photo";
+    ///////
     public BDHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -46,12 +52,17 @@ public class BDHelper extends SQLiteOpenHelper {
         String CREATE_NOTES_TABLE = "CREATE TABLE " + TABLE_NOTAS + "("
                 + NOTE_ID + " TEXT PRIMARY KEY," + NOTE_Text + " TEXT"+","+ NOTE_CIFRA +" TEXT)";
         db.execSQL(CREATE_NOTES_TABLE);
+
+        String CREATE_PHOTO_TABLE = "CREATE TABLE " + TABLE_PHOTO + "("
+                + PHOTO_ID + " TEXT PRIMARY KEY," + PHOTO_CIFRADO + " TEXT"+","+ PHOTO_RUTA +" TEXT)";
+        db.execSQL(CREATE_PHOTO_TABLE);
     }
     //ACtualizacion de l abase de datos
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTAS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PHOTO);
         // Create tables again
         onCreate(db);
     }
@@ -79,6 +90,27 @@ public class BDHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void  addPhoto(String ID, String ruta) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+
+        // Insertar
+        try{
+        //db.insert(TABLE_NOTAS, null, values);
+        String query = ("INSERT INTO "+TABLE_PHOTO+" ("+PHOTO_ID+","+PHOTO_CIFRADO+","+PHOTO_RUTA+") VALUES('"+ID+"','0','"+ruta+"');");
+        db.execSQL(query);
+        }catch (SQLException ex){
+
+                //Snackbar.make(v, "Error al insertar Titulo ya utilizado", Snackbar.LENGTH_LONG)
+                  //    .setAction("Action", null).show();
+            System.out.println(ex);
+        }
+        db.close();
+    }
+
+
+
     public ArrayList getAllNotes() {
         ArrayList NoteList = new ArrayList();
 
@@ -99,6 +131,25 @@ public class BDHelper extends SQLiteOpenHelper {
         return NoteList;
     }
 
+    public ArrayList getAllPhotosRutes() {
+        ArrayList NoteList = new ArrayList();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_PHOTO;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                NoteList.add(cursor.getString(2));
+            } while (cursor.moveToNext());
+        }
+
+        db.close();
+        return NoteList;
+    }
     // getNote
     public String getNote(String id) {
         String selectQuery = "SELECT "+NOTE_Text+" FROM " + TABLE_NOTAS +" WHERE "+NOTE_ID+" = '"+id+"';";
